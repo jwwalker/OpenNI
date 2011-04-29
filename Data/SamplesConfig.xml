@@ -4,9 +4,9 @@
 		<License vendor="vendor" key="key"/>
 		-->
 	</Licenses>
-	<Log writeToConsole="false" writeToFile="false">
+	<Log writeToConsole="false" writeToFile="true">
 		<!-- 0 - Verbose, 1 - Info, 2 - Warning, 3 - Error (default) -->
-		<LogLevel value="3"/>
+		<LogLevel value="2"/>
 		<Masks>
 			<Mask name="ALL" on="true"/>
 		</Masks>
