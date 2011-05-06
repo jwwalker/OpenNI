@@ -1,0 +1,4 @@
+.DS_Store
+Platform/Linux-x86/Bin/
+Platform/Linux-x86/Build/OpenNI/Release/
+Platform/Linux-x86/Build/Samples/NiUserTracker/Release/
