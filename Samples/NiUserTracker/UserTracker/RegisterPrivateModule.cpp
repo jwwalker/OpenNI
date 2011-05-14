@@ -54,25 +54,31 @@ void	RegisterPrivateModule( const char* inNameBase )
 		
 		if (NULL != std::strstr( inNameBase, "Features" ))
 		{
-			CFURLRef dataURL = CFBundleCopyResourceURL( mainBundle,
-				CFSTR("s"), CFSTR("dat"), CFSTR("Features") );
-			if (dataURL != NULL)
+			CFURLRef dirURL = CFBundleCopyResourcesDirectoryURL( mainBundle );
+			
+			if (dirURL != NULL)
 			{
-				CFURLRef dirURL = CFURLCreateCopyDeletingLastPathComponent( NULL,
-					dataURL );
-				CFRelease( dataURL );
 				CFURLGetFileSystemRepresentation( dirURL, true, (UInt8*)fullPath,
 					sizeof(fullPath) );
 				CFRelease( dirURL );
-				
+			
 				// Copy the string into heap storage, which again will leak.  Sigh.
 				// But xnRegisterModuleWithOpenNI just passes pointers around.
 				int len = std::strlen( fullPath );
+				if (len > 99)
+				{
+					printf("Config path '%s' length %d > 99, so "
+						"FeatureExtraction.ini probably won't be found.\n",
+						fullPath, len );
+				}
 				configDirPath = new char[len+1];
 				std::strcpy( (char*)configDirPath, fullPath );
 			}
 		}
 		
-		xnRegisterModuleWithOpenNI( interfaceRec, configDirPath, inNameBase );
+		XnStatus status = xnRegisterModuleWithOpenNI( interfaceRec,
+			configDirPath, inNameBase );
+		printf( "Registered module '%s', config '%s', status %X\n",
+			inNameBase, configDirPath, status );
 	}
 }

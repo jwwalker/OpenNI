@@ -37,6 +37,9 @@
 
 #import "SceneDrawer.h"
 #import "RegisterPrivateModule.h"
+#import "InitLogDestination.h"
+
+#import <CoreFoundation/CoreFoundation.h>
 
 //---------------------------------------------------------------------------
 // Globals
@@ -187,11 +190,7 @@ void glutDisplay (void)
 	xn::SceneMetaData sceneMD;
 	xn::DepthMetaData depthMD;
 	g_DepthGenerator.GetMetaData(depthMD);
-#ifndef USE_GLES
 	glOrtho(0, depthMD.XRes(), depthMD.YRes(), 0, -1.0, 1.0);
-#else
-	glOrthof(0, depthMD.XRes(), depthMD.YRes(), 0, -1.0, 1.0);
-#endif
 
 	glDisable(GL_TEXTURE_2D);
 
@@ -206,12 +205,9 @@ void glutDisplay (void)
 		g_UserGenerator.GetUserPixels(0, sceneMD);
 		DrawDepthMap(depthMD, sceneMD);
 
-#ifndef USE_GLES
 	glutSwapBuffers();
-#endif
 }
 
-#ifndef USE_GLES
 void glutIdle (void)
 {
 	if (g_bQuit) {
@@ -278,9 +274,7 @@ void glInit (int * pargc, char ** argv)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 }
-#endif // USE_GLES
 
-#define SAMPLE_XML_PATH "../../../../Data/SamplesConfig.xml"
 
 #define CHECK_RC(nRetVal, what)										\
 	if (nRetVal != XN_STATUS_OK)									\
@@ -315,11 +309,28 @@ int main(int argc, char **argv)
 {
 	XnStatus nRetVal = XN_STATUS_OK;
 	
+	InitLogDestination();
+	
 	RegisterModules();
 
+	char configPath[ 1024 ];
+	CFBundleRef mainBundle = CFBundleGetMainBundle();
+	CFURLRef dataURL = CFBundleCopyResourceURL( mainBundle,
+		CFSTR("SamplesConfig"), CFSTR("xml"), NULL );
+	if (dataURL != NULL)
+	{
+		CFURLGetFileSystemRepresentation( dataURL, true, (UInt8*)configPath,
+			sizeof(configPath) );
+		CFRelease( dataURL );
+	}
+	else
+	{
+		return 1;
+	}
+	
 	{
 		xn::EnumerationErrors errors;
-		nRetVal = g_Context.InitFromXmlFile(SAMPLE_XML_PATH, &errors);
+		nRetVal = g_Context.InitFromXmlFile( configPath, &errors );
 		if (nRetVal == XN_STATUS_NO_NODE_PRESENT)
 		{
 			XnChar strError[1024];
@@ -371,28 +382,6 @@ int main(int argc, char **argv)
 	nRetVal = g_Context.StartGeneratingAll();
 	CHECK_RC(nRetVal, "StartGenerating");
 
-#ifndef USE_GLES
 	glInit(&argc, argv);
 	glutMainLoop();
-#else
-	if (!opengles_init(GL_WIN_SIZE_X, GL_WIN_SIZE_Y, &display, &surface, &context))
-	{
-		printf("Error initializing opengles\n");
-		CleanupExit();
-	}
-
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
-
-	while (!g_bQuit)
-	{
-		glutDisplay();
-		eglSwapBuffers(display, surface);
-	}
-	opengles_shutdown(display, surface, context);
-
-	CleanupExit();
-#endif
 }
