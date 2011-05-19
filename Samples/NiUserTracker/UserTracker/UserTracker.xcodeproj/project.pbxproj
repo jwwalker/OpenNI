@@ -15,29 +15,11 @@
 		BE5CFBF51379EB3800E4E383 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5BD831136A2C6B00B8CEFC /* GLUT.framework */; };
 		BE5CFC081379EB3D00E4E383 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5BD833136A2C6B00B8CEFC /* OpenGL.framework */; };
 		BE5CFC091379EB6000E4E383 /* SceneDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5BD82C136A2C3500B8CEFC /* SceneDrawer.cpp */; };
-		BE5CFC0B1379EB8A00E4E383 /* libOpenNI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5BD83D136A306600B8CEFC /* libOpenNI.dylib */; };
-		BE5CFC1C1379EBC300E4E383 /* libXnCore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFC171379EBC300E4E383 /* libXnCore.dylib */; };
-		BE5CFC1D1379EBC300E4E383 /* libXnDDK.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFC181379EBC300E4E383 /* libXnDDK.dylib */; };
-		BE5CFC1E1379EBC300E4E383 /* libXnDeviceFile.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFC191379EBC300E4E383 /* libXnDeviceFile.dylib */; };
-		BE5CFC1F1379EBC300E4E383 /* libXnDeviceSensorV2KM.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFC1A1379EBC300E4E383 /* libXnDeviceSensorV2KM.dylib */; };
-		BE5CFC201379EBC300E4E383 /* libXnFormats.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFC1B1379EBC300E4E383 /* libXnFormats.dylib */; };
-		BE5CFC251379EBD900E4E383 /* libXnVCNITE_1_3_1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFC211379EBD900E4E383 /* libXnVCNITE_1_3_1.dylib */; };
-		BE5CFC261379EBD900E4E383 /* libXnVFeatures_1_3_1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFC221379EBD900E4E383 /* libXnVFeatures_1_3_1.dylib */; };
-		BE5CFC271379EBD900E4E383 /* libXnVHandGenerator_1_3_1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFC231379EBD900E4E383 /* libXnVHandGenerator_1_3_1.dylib */; };
-		BE5CFC281379EBD900E4E383 /* libXnVNite_1_3_1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFC241379EBD900E4E383 /* libXnVNite_1_3_1.dylib */; };
-		BE5CFC2C1379EBE300E4E383 /* libnimCodecs.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFC291379EBE300E4E383 /* libnimCodecs.dylib */; };
-		BE5CFC2D1379EBE300E4E383 /* libnimMockNodes.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFC2A1379EBE300E4E383 /* libnimMockNodes.dylib */; };
-		BE5CFC2E1379EBE300E4E383 /* libnimRecorder.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFC2B1379EBE300E4E383 /* libnimRecorder.dylib */; };
 		BE5CFC311379EC1D00E4E383 /* app-main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5CFC301379EC1D00E4E383 /* app-main.cpp */; };
 		BE5CFC631379FAED00E4E383 /* libXnVFeatures_1_3_1.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC221379EBD900E4E383 /* libXnVFeatures_1_3_1.dylib */; };
-		BE5CFC641379FAED00E4E383 /* libXnVHandGenerator_1_3_1.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC231379EBD900E4E383 /* libXnVHandGenerator_1_3_1.dylib */; };
-		BE5CFC651379FAED00E4E383 /* libXnDeviceFile.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC191379EBC300E4E383 /* libXnDeviceFile.dylib */; };
 		BE5CFC661379FAED00E4E383 /* libXnDeviceSensorV2KM.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC1A1379EBC300E4E383 /* libXnDeviceSensorV2KM.dylib */; };
-		BE5CFC671379FAED00E4E383 /* libnimCodecs.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC291379EBE300E4E383 /* libnimCodecs.dylib */; };
-		BE5CFC681379FAED00E4E383 /* libnimMockNodes.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC2A1379EBE300E4E383 /* libnimMockNodes.dylib */; };
 		BE5CFC6B1379FB3800E4E383 /* RegisterPrivateModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5CFC6A1379FB3800E4E383 /* RegisterPrivateModule.cpp */; };
 		BE5CFCFA1379FD7600E4E383 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFCF91379FD7600E4E383 /* CoreFoundation.framework */; };
-		BE5CFD37137A04CD00E4E383 /* libOpenNI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFD36137A04CD00E4E383 /* libOpenNI.dylib */; };
 		BE5CFD38137A04E200E4E383 /* libOpenNI.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFD36137A04CD00E4E383 /* libOpenNI.dylib */; };
 		BE897A4F137DFCD300A708D0 /* InitLogDestination.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE897A4E137DFCD300A708D0 /* InitLogDestination.cpp */; };
 		BEE11E70137B57CD00ED0184 /* h.dat in Resources */ = {isa = PBXBuildFile; fileRef = BEE11E6E137B57CD00ED0184 /* h.dat */; };
@@ -45,11 +27,8 @@
 		BEE11E9D137B654900ED0184 /* libXnCore.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC171379EBC300E4E383 /* libXnCore.dylib */; };
 		BEE11EA1137B65B300ED0184 /* libXnDDK.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC181379EBC300E4E383 /* libXnDDK.dylib */; };
 		BEE11EAB137B66E200ED0184 /* libXnFormats.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC1B1379EBC300E4E383 /* libXnFormats.dylib */; };
-		BEE11EBA137B698000ED0184 /* libXnVCNITE_1_3_1.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC211379EBD900E4E383 /* libXnVCNITE_1_3_1.dylib */; };
-		BEE11EBB137B698B00ED0184 /* libXnVNite_1_3_1.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC241379EBD900E4E383 /* libXnVNite_1_3_1.dylib */; };
-		BEE11EBF137B69A900ED0184 /* libnimRecorder.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC2B1379EBE300E4E383 /* libnimRecorder.dylib */; };
-		BEE11ED6137B744B00ED0184 /* libusb.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BEE11ED5137B744B00ED0184 /* libusb.dylib */; };
 		BEE11ED7137B745900ED0184 /* libusb.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BEE11ED5137B744B00ED0184 /* libusb.dylib */; };
+		BEE12A251385CD4E0097B9DB /* libOpenNI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFD36137A04CD00E4E383 /* libOpenNI.dylib */; };
 		BEF2EF12137C52A200708861 /* SamplesConfig.xml in Resources */ = {isa = PBXBuildFile; fileRef = BEF2EF11137C52A200708861 /* SamplesConfig.xml */; };
 		BEF2EF2A137C5D3300708861 /* FeatureExtraction.ini in Resources */ = {isa = PBXBuildFile; fileRef = BEF2EF29137C5D3300708861 /* FeatureExtraction.ini */; };
 /* End PBXBuildFile section */
@@ -70,20 +49,13 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				BE5CFD38137A04E200E4E383 /* libOpenNI.dylib in Copy dylibs */,
 				BEE11ED7137B745900ED0184 /* libusb.dylib in Copy dylibs */,
-				BEE11EBB137B698B00ED0184 /* libXnVNite_1_3_1.dylib in Copy dylibs */,
-				BEE11EBA137B698000ED0184 /* libXnVCNITE_1_3_1.dylib in Copy dylibs */,
 				BEE11EAB137B66E200ED0184 /* libXnFormats.dylib in Copy dylibs */,
 				BEE11EA1137B65B300ED0184 /* libXnDDK.dylib in Copy dylibs */,
 				BEE11E9D137B654900ED0184 /* libXnCore.dylib in Copy dylibs */,
-				BE5CFD38137A04E200E4E383 /* libOpenNI.dylib in Copy dylibs */,
 				BE5CFC631379FAED00E4E383 /* libXnVFeatures_1_3_1.dylib in Copy dylibs */,
-				BE5CFC641379FAED00E4E383 /* libXnVHandGenerator_1_3_1.dylib in Copy dylibs */,
-				BE5CFC651379FAED00E4E383 /* libXnDeviceFile.dylib in Copy dylibs */,
 				BE5CFC661379FAED00E4E383 /* libXnDeviceSensorV2KM.dylib in Copy dylibs */,
-				BE5CFC671379FAED00E4E383 /* libnimCodecs.dylib in Copy dylibs */,
-				BE5CFC681379FAED00E4E383 /* libnimMockNodes.dylib in Copy dylibs */,
-				BEE11EBF137B69A900ED0184 /* libnimRecorder.dylib in Copy dylibs */,
 			);
 			name = "Copy dylibs";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,13 +77,7 @@
 		BE5CFC191379EBC300E4E383 /* libXnDeviceFile.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnDeviceFile.dylib; path = "install_name-modified/SensorKinect/libXnDeviceFile.dylib"; sourceTree = Kinect; };
 		BE5CFC1A1379EBC300E4E383 /* libXnDeviceSensorV2KM.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnDeviceSensorV2KM.dylib; path = "install_name-modified/SensorKinect/libXnDeviceSensorV2KM.dylib"; sourceTree = Kinect; };
 		BE5CFC1B1379EBC300E4E383 /* libXnFormats.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnFormats.dylib; path = "install_name-modified/SensorKinect/libXnFormats.dylib"; sourceTree = Kinect; };
-		BE5CFC211379EBD900E4E383 /* libXnVCNITE_1_3_1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVCNITE_1_3_1.dylib; path = "install_name-modified/NITE/libXnVCNITE_1_3_1.dylib"; sourceTree = Kinect; };
 		BE5CFC221379EBD900E4E383 /* libXnVFeatures_1_3_1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVFeatures_1_3_1.dylib; path = "install_name-modified/NITE/libXnVFeatures_1_3_1.dylib"; sourceTree = Kinect; };
-		BE5CFC231379EBD900E4E383 /* libXnVHandGenerator_1_3_1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVHandGenerator_1_3_1.dylib; path = "install_name-modified/NITE/libXnVHandGenerator_1_3_1.dylib"; sourceTree = Kinect; };
-		BE5CFC241379EBD900E4E383 /* libXnVNite_1_3_1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVNite_1_3_1.dylib; path = "install_name-modified/NITE/libXnVNite_1_3_1.dylib"; sourceTree = Kinect; };
-		BE5CFC291379EBE300E4E383 /* libnimCodecs.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnimCodecs.dylib; path = "install_name-modified/OpenNI/libnimCodecs.dylib"; sourceTree = Kinect; };
-		BE5CFC2A1379EBE300E4E383 /* libnimMockNodes.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnimMockNodes.dylib; path = "install_name-modified/OpenNI/libnimMockNodes.dylib"; sourceTree = Kinect; };
-		BE5CFC2B1379EBE300E4E383 /* libnimRecorder.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libnimRecorder.dylib; path = "install_name-modified/OpenNI/libnimRecorder.dylib"; sourceTree = Kinect; };
 		BE5CFC301379EC1D00E4E383 /* app-main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "app-main.cpp"; sourceTree = "<group>"; };
 		BE5CFC691379FB3800E4E383 /* RegisterPrivateModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterPrivateModule.h; sourceTree = "<group>"; };
 		BE5CFC6A1379FB3800E4E383 /* RegisterPrivateModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RegisterPrivateModule.cpp; sourceTree = "<group>"; };
@@ -141,24 +107,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEE12A251385CD4E0097B9DB /* libOpenNI.dylib in Frameworks */,
 				BE5CFBF51379EB3800E4E383 /* GLUT.framework in Frameworks */,
 				BE5CFC081379EB3D00E4E383 /* OpenGL.framework in Frameworks */,
-				BE5CFC0B1379EB8A00E4E383 /* libOpenNI.dylib in Frameworks */,
-				BE5CFC1C1379EBC300E4E383 /* libXnCore.dylib in Frameworks */,
-				BE5CFC1D1379EBC300E4E383 /* libXnDDK.dylib in Frameworks */,
-				BE5CFC1E1379EBC300E4E383 /* libXnDeviceFile.dylib in Frameworks */,
-				BE5CFC1F1379EBC300E4E383 /* libXnDeviceSensorV2KM.dylib in Frameworks */,
-				BE5CFC201379EBC300E4E383 /* libXnFormats.dylib in Frameworks */,
-				BE5CFC251379EBD900E4E383 /* libXnVCNITE_1_3_1.dylib in Frameworks */,
-				BE5CFC261379EBD900E4E383 /* libXnVFeatures_1_3_1.dylib in Frameworks */,
-				BE5CFC271379EBD900E4E383 /* libXnVHandGenerator_1_3_1.dylib in Frameworks */,
-				BE5CFC281379EBD900E4E383 /* libXnVNite_1_3_1.dylib in Frameworks */,
-				BE5CFC2C1379EBE300E4E383 /* libnimCodecs.dylib in Frameworks */,
-				BE5CFC2D1379EBE300E4E383 /* libnimMockNodes.dylib in Frameworks */,
-				BE5CFC2E1379EBE300E4E383 /* libnimRecorder.dylib in Frameworks */,
 				BE5CFCFA1379FD7600E4E383 /* CoreFoundation.framework in Frameworks */,
-				BE5CFD37137A04CD00E4E383 /* libOpenNI.dylib in Frameworks */,
-				BEE11ED6137B744B00ED0184 /* libusb.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,18 +170,12 @@
 			children = (
 				BEE11ED5137B744B00ED0184 /* libusb.dylib */,
 				BE5CFD36137A04CD00E4E383 /* libOpenNI.dylib */,
-				BE5CFC211379EBD900E4E383 /* libXnVCNITE_1_3_1.dylib */,
 				BE5CFC221379EBD900E4E383 /* libXnVFeatures_1_3_1.dylib */,
-				BE5CFC231379EBD900E4E383 /* libXnVHandGenerator_1_3_1.dylib */,
-				BE5CFC241379EBD900E4E383 /* libXnVNite_1_3_1.dylib */,
 				BE5CFC171379EBC300E4E383 /* libXnCore.dylib */,
 				BE5CFC181379EBC300E4E383 /* libXnDDK.dylib */,
 				BE5CFC191379EBC300E4E383 /* libXnDeviceFile.dylib */,
 				BE5CFC1A1379EBC300E4E383 /* libXnDeviceSensorV2KM.dylib */,
 				BE5CFC1B1379EBC300E4E383 /* libXnFormats.dylib */,
-				BE5CFC291379EBE300E4E383 /* libnimCodecs.dylib */,
-				BE5CFC2A1379EBE300E4E383 /* libnimMockNodes.dylib */,
-				BE5CFC2B1379EBE300E4E383 /* libnimRecorder.dylib */,
 			);
 			name = "dylibs for app";
 			sourceTree = "<group>";
