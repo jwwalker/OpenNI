@@ -26,4 +26,6 @@
 
 void DrawDepthMap(const xn::DepthMetaData& dmd, const xn::SceneMetaData& smd);
 
+void DrawImageMap(const xn::ImageMetaData& imd, const xn::SceneMetaData& smd);
+
 #endif

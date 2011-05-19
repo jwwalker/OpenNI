@@ -46,6 +46,7 @@ extern XnBool g_bPrintState;
 
 #define MAX_DEPTH 10000
 float g_pDepthHist[MAX_DEPTH];
+
 unsigned int getClosestPowerOfTwo(unsigned int n)
 {
 	unsigned int m = 2;
@@ -53,6 +54,7 @@ unsigned int getClosestPowerOfTwo(unsigned int n)
 
 	return m;
 }
+
 GLuint initTexture(void** buf, int& width, int& height)
 {
 	GLuint texID = 0;
@@ -60,7 +62,7 @@ GLuint initTexture(void** buf, int& width, int& height)
 
 	width = getClosestPowerOfTwo(width);
 	height = getClosestPowerOfTwo(height); 
-	*buf = new unsigned char[width*height*4];
+	*buf = new unsigned char[width*height*3];	// JWW was 4 bytes per pixel
 	glBindTexture(GL_TEXTURE_2D,texID);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -70,6 +72,7 @@ GLuint initTexture(void** buf, int& width, int& height)
 }
 
 GLfloat texcoords[8];
+
 void DrawRectangle(float topLeftX, float topLeftY, float bottomRightX, float bottomRightY)
 {
 	GLfloat verts[8] = {	topLeftX, topLeftY,
@@ -83,6 +86,7 @@ void DrawRectangle(float topLeftX, float topLeftY, float bottomRightX, float bot
 	//TODO: Maybe glFinish needed here instead - if there's some bad graphics crap
 	glFlush();
 }
+
 void DrawTexture(float topLeftX, float topLeftY, float bottomRightX, float bottomRightY)
 {
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -153,143 +157,8 @@ void DrawLimb(XnUserID player, XnSkeletonJoint eJoint1, XnSkeletonJoint eJoint2)
 }
 
 
-void DrawDepthMap(const xn::DepthMetaData& dmd, const xn::SceneMetaData& smd)
+static void DrawUsersAndStrings()
 {
-	static bool bInitialized = false;	
-	static GLuint depthTexID;
-	static unsigned char* pDepthTexBuf;
-	static int texWidth, texHeight;
-
-	 float topLeftX;
-	 float topLeftY;
-	 float bottomRightY;
-	 float bottomRightX;
-	float texXpos;
-	float texYpos;
-
-	if(!bInitialized)
-	{
-
-		texWidth =  getClosestPowerOfTwo(dmd.XRes());
-		texHeight = getClosestPowerOfTwo(dmd.YRes());
-
-//		printf("Initializing depth texture: width = %d, height = %d\n", texWidth, texHeight);
-		depthTexID = initTexture((void**)&pDepthTexBuf,texWidth, texHeight) ;
-
-//		printf("Initialized depth texture: width = %d, height = %d\n", texWidth, texHeight);
-		bInitialized = true;
-
-		topLeftX = dmd.XRes();
-		topLeftY = 0;
-		bottomRightY = dmd.YRes();
-		bottomRightX = 0;
-		texXpos =(float)dmd.XRes()/texWidth;
-		texYpos  =(float)dmd.YRes()/texHeight;
-
-		memset(texcoords, 0, 8*sizeof(float));
-		texcoords[0] = texXpos, texcoords[1] = texYpos, texcoords[2] = texXpos, texcoords[7] = texYpos;
-
-	}
-	unsigned int nValue = 0;
-	unsigned int nHistValue = 0;
-	unsigned int nIndex = 0;
-	unsigned int nX = 0;
-	unsigned int nY = 0;
-	unsigned int nNumberOfPoints = 0;
-	XnUInt16 g_nXRes = dmd.XRes();
-	XnUInt16 g_nYRes = dmd.YRes();
-
-	unsigned char* pDestImage = pDepthTexBuf;
-
-	const XnDepthPixel* pDepth = dmd.Data();
-	const XnLabel* pLabels = smd.Data();
-
-	// Calculate the accumulative histogram
-	memset(g_pDepthHist, 0, MAX_DEPTH*sizeof(float));
-	for (nY=0; nY<g_nYRes; nY++)
-	{
-		for (nX=0; nX<g_nXRes; nX++)
-		{
-			nValue = *pDepth;
-
-			if (nValue != 0)
-			{
-				g_pDepthHist[nValue]++;
-				nNumberOfPoints++;
-			}
-
-			pDepth++;
-		}
-	}
-
-	for (nIndex=1; nIndex<MAX_DEPTH; nIndex++)
-	{
-		g_pDepthHist[nIndex] += g_pDepthHist[nIndex-1];
-	}
-	if (nNumberOfPoints)
-	{
-		for (nIndex=1; nIndex<MAX_DEPTH; nIndex++)
-		{
-			g_pDepthHist[nIndex] = (unsigned int)(256 * (1.0f - (g_pDepthHist[nIndex] / nNumberOfPoints)));
-		}
-	}
-
-	pDepth = dmd.Data();
-	if (g_bDrawPixels)
-	{
-		XnUInt32 nIndex = 0;
-		// Prepare the texture map
-		for (nY=0; nY<g_nYRes; nY++)
-		{
-			for (nX=0; nX < g_nXRes; nX++, nIndex++)
-			{
-
-				pDestImage[0] = 0;
-				pDestImage[1] = 0;
-				pDestImage[2] = 0;
-				if (g_bDrawBackground || *pLabels != 0)
-				{
-					nValue = *pDepth;
-					XnLabel label = *pLabels;
-					XnUInt32 nColorID = label % nColors;
-					if (label == 0)
-					{
-						nColorID = nColors;
-					}
-
-					if (nValue != 0)
-					{
-						nHistValue = g_pDepthHist[nValue];
-
-						pDestImage[0] = nHistValue * Colors[nColorID][0]; 
-						pDestImage[1] = nHistValue * Colors[nColorID][1];
-						pDestImage[2] = nHistValue * Colors[nColorID][2];
-					}
-				}
-
-				pDepth++;
-				pLabels++;
-				pDestImage+=3;
-			}
-
-			pDestImage += (texWidth - g_nXRes) *3;
-		}
-	}
-	else
-	{
-		xnOSMemSet(pDepthTexBuf, 0, 3*2*g_nXRes*g_nYRes);
-	}
-
-	glBindTexture(GL_TEXTURE_2D, depthTexID);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth, texHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, pDepthTexBuf);
-
-	// Display the OpenGL texture map
-	glColor4f(0.75,0.75,0.75,1);
-
-	glEnable(GL_TEXTURE_2D);
-	DrawTexture(dmd.XRes(),dmd.YRes(),0,0);	
-	glDisable(GL_TEXTURE_2D);
-
 	char strLabel[50] = "";
 	XnUserID aUsers[15];
 	XnUInt16 nUsers = 15;
@@ -365,4 +234,246 @@ void DrawDepthMap(const xn::DepthMetaData& dmd, const xn::SceneMetaData& smd)
 #endif
 		}
 	}
+}
+
+void DrawImageMap(const xn::ImageMetaData& imd, const xn::SceneMetaData& smd)
+{
+	static bool bInitialized = false;	
+	static GLuint texID;
+	static unsigned char* pTexBuf;
+	static int texWidth, texHeight;
+
+	float topLeftX;
+	float topLeftY;
+	float bottomRightY;
+	float bottomRightX;
+	
+	XnUInt16 g_nXRes = imd.XRes();
+	XnUInt16 g_nYRes = imd.YRes();
+
+	if (!bInitialized)
+	{
+		printf( "Image size (%d, %d), scene (%d, %d)\n", (int)g_nXRes, (int)g_nYRes,
+			(int)smd.XRes(), (int)smd.YRes() );
+		texWidth =  getClosestPowerOfTwo(g_nXRes);
+		texHeight = getClosestPowerOfTwo(g_nYRes);
+		
+		texID = initTexture((void**)&pTexBuf, texWidth, texHeight) ;
+		bInitialized = true;
+
+		topLeftX = imd.XRes();
+		topLeftY = 0;
+		bottomRightY = imd.YRes();
+		bottomRightX = 0;
+		float texXpos =(float)imd.XRes()/texWidth;
+		float texYpos  =(float)imd.YRes()/texHeight;
+		memset(texcoords, 0, 8*sizeof(float));
+		texcoords[0] = texXpos, texcoords[1] = texYpos, texcoords[2] = texXpos, texcoords[7] = texYpos;
+	}
+
+	
+	const XnRGB24Pixel* pImage = imd.RGB24Data();
+	const XnLabel* pLabels = smd.Data();
+	
+	unsigned char* pDestImage = pTexBuf;
+
+	unsigned int nX = 0;
+	unsigned int nY = 0;
+
+	if (g_bDrawPixels)
+	{
+		for (nY=0; nY<g_nYRes; nY++)
+		{
+			for (nX=0; nX < g_nXRes; nX++)
+			{
+				XnLabel label = *pLabels;
+				XnUInt32 nColorID = label % nColors;
+				
+				if (label == 0)
+				{
+					pDestImage[0] = pImage->nRed;
+					pDestImage[1] = pImage->nGreen;
+					pDestImage[2] = pImage->nBlue;
+				}
+				else
+				{
+				#if 0
+					pDestImage[0] = 255 * Colors[nColorID][0];
+					pDestImage[1] = 255 * Colors[nColorID][1];
+					pDestImage[2] = 255 * Colors[nColorID][2];
+				#else
+					pDestImage[0] = 0.5 * pImage->nRed + 127 * Colors[nColorID][0];
+					pDestImage[1] = 0.5 * pImage->nGreen + 127 * Colors[nColorID][1];
+					pDestImage[2] = 0.5 * pImage->nBlue + 127 * Colors[nColorID][2];
+				#endif
+				}
+
+				pImage++;
+				pLabels++;
+				pDestImage += 3;
+			}
+			
+			pDestImage += (texWidth - g_nXRes) * 3;
+		}
+	}
+	else
+	{
+		xnOSMemSet( pTexBuf, 0, 3 * texWidth * texHeight );
+	}
+
+	glBindTexture(GL_TEXTURE_2D, texID);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth, texHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, pTexBuf);
+
+	// Display the OpenGL texture map
+	glColor4f(1.0,1.0,1.0,1);
+
+	glEnable(GL_TEXTURE_2D);
+	DrawTexture( g_nXRes, g_nYRes, 0, 0 );	
+	glDisable(GL_TEXTURE_2D);
+	
+	DrawUsersAndStrings();
+}
+
+void DrawDepthMap(const xn::DepthMetaData& dmd, const xn::SceneMetaData& smd)
+{
+	static bool bInitialized = false;	
+	static GLuint depthTexID;
+	static unsigned char* pDepthTexBuf;
+	static int texWidth, texHeight;
+
+	 float topLeftX;
+	 float topLeftY;
+	 float bottomRightY;
+	 float bottomRightX;
+
+	if(!bInitialized)
+	{
+
+		texWidth =  getClosestPowerOfTwo(dmd.XRes());
+		texHeight = getClosestPowerOfTwo(dmd.YRes());
+
+//		printf("Initializing depth texture: width = %d, height = %d\n", texWidth, texHeight);
+		depthTexID = initTexture((void**)&pDepthTexBuf,texWidth, texHeight) ;
+
+//		printf("Initialized depth texture: width = %d, height = %d\n", texWidth, texHeight);
+		bInitialized = true;
+
+		topLeftX = dmd.XRes();
+		topLeftY = 0;
+		bottomRightY = dmd.YRes();
+		bottomRightX = 0;
+		float texXpos =(float)dmd.XRes()/texWidth;
+		float texYpos  =(float)dmd.YRes()/texHeight;
+
+		memset(texcoords, 0, 8*sizeof(float));
+		texcoords[0] = texXpos, texcoords[1] = texYpos, texcoords[2] = texXpos, texcoords[7] = texYpos;
+
+	}
+	unsigned int nValue = 0;
+	unsigned int nHistValue = 0;
+	unsigned int nIndex = 0;
+	unsigned int nX = 0;
+	unsigned int nY = 0;
+	unsigned int nNumberOfPoints = 0;
+	XnUInt16 g_nXRes = dmd.XRes();
+	XnUInt16 g_nYRes = dmd.YRes();
+
+	unsigned char* pDestImage = pDepthTexBuf;
+
+	const XnDepthPixel* pDepth = dmd.Data();
+	const XnLabel* pLabels = smd.Data();
+
+	// Calculate the accumulative histogram
+	memset(g_pDepthHist, 0, MAX_DEPTH*sizeof(float));
+	for (nY=0; nY<g_nYRes; nY++)
+	{
+		for (nX=0; nX<g_nXRes; nX++)
+		{
+			nValue = *pDepth;
+
+			if (nValue != 0)
+			{
+				if (nValue > MAX_DEPTH)
+				{
+					printf("funky depth %d\n", (int) nValue);
+				}
+				g_pDepthHist[nValue]++;
+				nNumberOfPoints++;
+			}
+
+			pDepth++;
+		}
+	}
+
+	for (nIndex=1; nIndex<MAX_DEPTH; nIndex++)
+	{
+		g_pDepthHist[nIndex] += g_pDepthHist[nIndex-1];
+	}
+	if (nNumberOfPoints)
+	{
+		for (nIndex=1; nIndex<MAX_DEPTH; nIndex++)
+		{
+			g_pDepthHist[nIndex] = (unsigned int)(255 * (1.0f - (g_pDepthHist[nIndex] / nNumberOfPoints)));
+		}
+	}
+
+	pDepth = dmd.Data();
+	if (g_bDrawPixels)
+	{
+		XnUInt32 nIndex = 0;
+		
+		// Prepare the texture map
+		for (nY=0; nY<g_nYRes; nY++)
+		{
+			for (nX=0; nX < g_nXRes; nX++, nIndex++)
+			{
+
+				pDestImage[0] = 0;
+				pDestImage[1] = 0;
+				pDestImage[2] = 0;
+				if (g_bDrawBackground || *pLabels != 0)
+				{
+					nValue = *pDepth;
+					XnLabel label = *pLabels;
+					XnUInt32 nColorID = label % nColors;
+					if (label == 0)
+					{
+						nColorID = nColors;
+					}
+
+					if (nValue != 0)
+					{
+						nHistValue = g_pDepthHist[nValue];
+
+						pDestImage[0] = nHistValue * Colors[nColorID][0]; 
+						pDestImage[1] = nHistValue * Colors[nColorID][1];
+						pDestImage[2] = nHistValue * Colors[nColorID][2];
+					}
+				}
+
+				pDepth++;
+				pLabels++;
+				pDestImage += 3;
+			}
+
+			pDestImage += (texWidth - g_nXRes) *3;
+		}
+	}
+	else
+	{
+		//xnOSMemSet(pDepthTexBuf, 0, 3*2*g_nXRes*g_nYRes);
+		xnOSMemSet(pDepthTexBuf, 0, 3 * texWidth * texHeight );
+	}
+
+	glBindTexture(GL_TEXTURE_2D, depthTexID);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth, texHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, pDepthTexBuf);
+
+	// Display the OpenGL texture map
+	glColor4f(0.75,0.75,0.75,1);
+
+	glEnable(GL_TEXTURE_2D);
+	DrawTexture(dmd.XRes(),dmd.YRes(),0,0);	
+	glDisable(GL_TEXTURE_2D);
+	
+	DrawUsersAndStrings();
 }
