@@ -47,6 +47,7 @@
 xn::Context g_Context;
 xn::DepthGenerator g_DepthGenerator;
 xn::UserGenerator g_UserGenerator;
+xn::ImageGenerator g_image;
 
 XnBool g_bNeedPose = FALSE;
 XnChar g_strPose[20] = "";
@@ -189,6 +190,8 @@ void glutDisplay (void)
 
 	xn::SceneMetaData sceneMD;
 	xn::DepthMetaData depthMD;
+	xn::ImageMetaData imageMD;
+	
 	g_DepthGenerator.GetMetaData(depthMD);
 	glOrtho(0, depthMD.XRes(), depthMD.YRes(), 0, -1.0, 1.0);
 
@@ -203,7 +206,10 @@ void glutDisplay (void)
 		// Process the data
 		g_DepthGenerator.GetMetaData(depthMD);
 		g_UserGenerator.GetUserPixels(0, sceneMD);
-		DrawDepthMap(depthMD, sceneMD);
+		g_image.GetMetaData(imageMD);
+		
+		//DrawDepthMap(depthMD, sceneMD);
+		DrawImageMap( imageMD, sceneMD );
 
 	glutSwapBuffers();
 }
@@ -275,24 +281,29 @@ void glInit (int * pargc, char ** argv)
 	glDisableClientState(GL_COLOR_ARRAY);
 }
 
+static void ReportFailure( XnStatus inErrCode, const char* inMessage )
+{
+	printf( "%s failed: %s\n", inMessage, xnGetStatusString(inErrCode) );
+}
+
 
 #define CHECK_RC(nRetVal, what)										\
 	if (nRetVal != XN_STATUS_OK)									\
 	{																\
-		printf("%s failed: %s\n", what, xnGetStatusString(nRetVal));\
+		ReportFailure( nRetVal, what );								\
 		return nRetVal;												\
 	}
 
 
 static void RegisterModules()
 {
-	RegisterPrivateModule( "nimMockNodes" );
-	RegisterPrivateModule( "nimCodecs" );
-	RegisterPrivateModule( "nimRecorder" );
-	RegisterPrivateModule( "XnDeviceSensorV2KM" );
-	RegisterPrivateModule( "XnDeviceFile" );
-	RegisterPrivateModule( "XnVFeatures_1_3_1" );
-	RegisterPrivateModule( "XnVHandGenerator_1_3_1" );
+	//RegisterPrivateModule( "nimMockNodes" );
+	//RegisterPrivateModule( "nimCodecs" );
+	//RegisterPrivateModule( "nimRecorder" );
+	RegisterPrivateModule( "XnDeviceSensorV2KM" );	// Required
+	//RegisterPrivateModule( "XnDeviceFile" );
+	RegisterPrivateModule( "XnVFeatures_1_3_1" );	// Required to create User node
+	//RegisterPrivateModule( "XnVHandGenerator_1_3_1" );
 }
 
 static void AddLicense()
@@ -355,6 +366,7 @@ int main(int argc, char **argv)
 		nRetVal = g_UserGenerator.Create(g_Context);
 		CHECK_RC(nRetVal, "Find user generator");
 	}
+	nRetVal = g_Context.FindExistingNode(XN_NODE_TYPE_IMAGE, g_image);
 
 	XnCallbackHandle hUserCallbacks, hCalibrationCallbacks, hPoseCallbacks;
 	if (!g_UserGenerator.IsCapabilitySupported(XN_CAPABILITY_SKELETON))
@@ -378,6 +390,11 @@ int main(int argc, char **argv)
 	}
 
 	g_UserGenerator.GetSkeletonCap().SetSkeletonProfile(XN_SKEL_PROFILE_ALL);
+	
+	// JWW: Not sure what this does, but I copied it from NISimpleViewer, and
+	// it helps align the scene analysis labels with the image.
+	g_DepthGenerator.GetAlternativeViewPointCap().SetViewPoint(g_image);
+	//g_image.GetAlternativeViewPointCap().SetViewPoint(g_DepthGenerator);
 
 	nRetVal = g_Context.StartGeneratingAll();
 	CHECK_RC(nRetVal, "StartGenerating");
