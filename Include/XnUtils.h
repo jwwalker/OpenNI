@@ -416,7 +416,7 @@ XN_C_API XnModuleNodeHandle XN_C_DECL xnGetModuleNodeHandle(XnNodeHandle hNode);
  * @param	strConfigDir	[in]	The module configuration directory.
  * @param	strName			[in]	Name of this module.
  */
-xnRegisterModuleWithOpenNI(XnOpenNIModuleInterface* pInterface, const XnChar* strConfigDir, const XnChar* strName);
+XN_C_API XnStatus xnRegisterModuleWithOpenNI(XnOpenNIModuleInterface* pInterface, const XnChar* strConfigDir, const XnChar* strName);
 /// @}
 
 /** @} */
