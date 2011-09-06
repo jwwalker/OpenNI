@@ -180,7 +180,9 @@ typedef size_t				XnSizeT;
 #define XN_API_IMPORT 
 
 /** Indicates a deprecated function */
-#define XN_API_DEPRECATED(msg) __attribute__((warning("This function is deprecated: " msg)))
+//#define XN_API_DEPRECATED(msg) __attribute__((warning("This function is deprecated: " msg)))
+// JWWalker: The warning attribute apparently does not exist in GCC 4.2.
+#define XN_API_DEPRECATED(msg) __attribute__((deprecated))
 
 /** Declares a global shared library export function. */ 
 #define XN_API_EXPORT_INIT()

@@ -4348,6 +4348,7 @@ namespace xn
 			CalibrationStartCookie* pCalibrationCookie = (CalibrationStartCookie*)hCallback;
 			xnUnregisterFromCalibrationStart(GetHandle(), pCalibrationCookie->hCallback);
 			xnOSFree(pCalibrationCookie);
+			return XN_STATUS_OK;	// JWWalker
 		}
 
 		/**
