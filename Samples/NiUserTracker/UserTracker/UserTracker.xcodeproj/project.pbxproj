@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE25B9B21417F37800D7ED40 /* libXnVHandGenerator_1_4_1.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE25B9AC1417F36F00D7ED40 /* libXnVHandGenerator_1_4_1.dylib */; };
+		BE25B9B31417F37800D7ED40 /* libXnVNite_1_4_1.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE25B9AD1417F36F00D7ED40 /* libXnVNite_1_4_1.dylib */; };
 		BE5BD82B136A2C2800B8CEFC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5BD82A136A2C2100B8CEFC /* main.cpp */; };
 		BE5BD82E136A2C3500B8CEFC /* SceneDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5BD82C136A2C3500B8CEFC /* SceneDrawer.cpp */; };
 		BE5BD832136A2C6B00B8CEFC /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5BD831136A2C6B00B8CEFC /* GLUT.framework */; };
@@ -16,17 +18,14 @@
 		BE5CFC081379EB3D00E4E383 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5BD833136A2C6B00B8CEFC /* OpenGL.framework */; };
 		BE5CFC091379EB6000E4E383 /* SceneDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5BD82C136A2C3500B8CEFC /* SceneDrawer.cpp */; };
 		BE5CFC311379EC1D00E4E383 /* app-main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5CFC301379EC1D00E4E383 /* app-main.cpp */; };
-		BE5CFC631379FAED00E4E383 /* libXnVFeatures_1_3_1.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC221379EBD900E4E383 /* libXnVFeatures_1_3_1.dylib */; };
 		BE5CFC661379FAED00E4E383 /* libXnDeviceSensorV2KM.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC1A1379EBC300E4E383 /* libXnDeviceSensorV2KM.dylib */; };
 		BE5CFC6B1379FB3800E4E383 /* RegisterPrivateModule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5CFC6A1379FB3800E4E383 /* RegisterPrivateModule.cpp */; };
 		BE5CFCFA1379FD7600E4E383 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFCF91379FD7600E4E383 /* CoreFoundation.framework */; };
 		BE5CFD38137A04E200E4E383 /* libOpenNI.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFD36137A04CD00E4E383 /* libOpenNI.dylib */; };
+		BE75FCFF1416DC2300C5E8A1 /* libXnVFeatures_1_4_1.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE75FCFD1416DC0A00C5E8A1 /* libXnVFeatures_1_4_1.dylib */; };
 		BE897A4F137DFCD300A708D0 /* InitLogDestination.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE897A4E137DFCD300A708D0 /* InitLogDestination.cpp */; };
 		BEE11E70137B57CD00ED0184 /* h.dat in Resources */ = {isa = PBXBuildFile; fileRef = BEE11E6E137B57CD00ED0184 /* h.dat */; };
 		BEE11E71137B57CD00ED0184 /* s.dat in Resources */ = {isa = PBXBuildFile; fileRef = BEE11E6F137B57CD00ED0184 /* s.dat */; };
-		BEE11E9D137B654900ED0184 /* libXnCore.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC171379EBC300E4E383 /* libXnCore.dylib */; };
-		BEE11EA1137B65B300ED0184 /* libXnDDK.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC181379EBC300E4E383 /* libXnDDK.dylib */; };
-		BEE11EAB137B66E200ED0184 /* libXnFormats.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BE5CFC1B1379EBC300E4E383 /* libXnFormats.dylib */; };
 		BEE11ED7137B745900ED0184 /* libusb.dylib in Copy dylibs */ = {isa = PBXBuildFile; fileRef = BEE11ED5137B744B00ED0184 /* libusb.dylib */; };
 		BEE12A251385CD4E0097B9DB /* libOpenNI.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE5CFD36137A04CD00E4E383 /* libOpenNI.dylib */; };
 		BEF2EF12137C52A200708861 /* SamplesConfig.xml in Resources */ = {isa = PBXBuildFile; fileRef = BEF2EF11137C52A200708861 /* SamplesConfig.xml */; };
@@ -49,12 +48,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				BE25B9B21417F37800D7ED40 /* libXnVHandGenerator_1_4_1.dylib in Copy dylibs */,
+				BE25B9B31417F37800D7ED40 /* libXnVNite_1_4_1.dylib in Copy dylibs */,
+				BE75FCFF1416DC2300C5E8A1 /* libXnVFeatures_1_4_1.dylib in Copy dylibs */,
 				BE5CFD38137A04E200E4E383 /* libOpenNI.dylib in Copy dylibs */,
 				BEE11ED7137B745900ED0184 /* libusb.dylib in Copy dylibs */,
-				BEE11EAB137B66E200ED0184 /* libXnFormats.dylib in Copy dylibs */,
-				BEE11EA1137B65B300ED0184 /* libXnDDK.dylib in Copy dylibs */,
-				BEE11E9D137B654900ED0184 /* libXnCore.dylib in Copy dylibs */,
-				BE5CFC631379FAED00E4E383 /* libXnVFeatures_1_3_1.dylib in Copy dylibs */,
 				BE5CFC661379FAED00E4E383 /* libXnDeviceSensorV2KM.dylib in Copy dylibs */,
 			);
 			name = "Copy dylibs";
@@ -64,6 +62,9 @@
 
 /* Begin PBXFileReference section */
 		8DD76F6C0486A84900D96B5E /* UserTracker */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UserTracker; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE25B9AC1417F36F00D7ED40 /* libXnVHandGenerator_1_4_1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVHandGenerator_1_4_1.dylib; path = "install_name-modified/NITE/libXnVHandGenerator_1_4_1.dylib"; sourceTree = Kinect; };
+		BE25B9AD1417F36F00D7ED40 /* libXnVNite_1_4_1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVNite_1_4_1.dylib; path = "install_name-modified/NITE/libXnVNite_1_4_1.dylib"; sourceTree = Kinect; };
+		BE25BAC91418202300D7ED40 /* libusb-1.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libusb-1.0.0.dylib"; path = "/opt/local/lib/libusb-1.0.0.dylib"; sourceTree = "<absolute>"; };
 		BE5BD82A136A2C2100B8CEFC /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../main.cpp; sourceTree = SOURCE_ROOT; };
 		BE5BD82C136A2C3500B8CEFC /* SceneDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SceneDrawer.cpp; path = ../SceneDrawer.cpp; sourceTree = SOURCE_ROOT; };
 		BE5BD82D136A2C3500B8CEFC /* SceneDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneDrawer.h; path = ../SceneDrawer.h; sourceTree = SOURCE_ROOT; };
@@ -72,21 +73,17 @@
 		BE5BD83D136A306600B8CEFC /* libOpenNI.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOpenNI.dylib; path = "../../../Platform/Linux-x86/Bin/Release/libOpenNI.dylib"; sourceTree = SOURCE_ROOT; };
 		BE5CFBDE1379EAF100E4E383 /* TrackerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrackerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE5CFBE01379EAF100E4E383 /* TrackerApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TrackerApp-Info.plist"; sourceTree = "<group>"; };
-		BE5CFC171379EBC300E4E383 /* libXnCore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnCore.dylib; path = "install_name-modified/SensorKinect/libXnCore.dylib"; sourceTree = Kinect; };
-		BE5CFC181379EBC300E4E383 /* libXnDDK.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnDDK.dylib; path = "install_name-modified/SensorKinect/libXnDDK.dylib"; sourceTree = Kinect; };
-		BE5CFC191379EBC300E4E383 /* libXnDeviceFile.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnDeviceFile.dylib; path = "install_name-modified/SensorKinect/libXnDeviceFile.dylib"; sourceTree = Kinect; };
 		BE5CFC1A1379EBC300E4E383 /* libXnDeviceSensorV2KM.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnDeviceSensorV2KM.dylib; path = "install_name-modified/SensorKinect/libXnDeviceSensorV2KM.dylib"; sourceTree = Kinect; };
-		BE5CFC1B1379EBC300E4E383 /* libXnFormats.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnFormats.dylib; path = "install_name-modified/SensorKinect/libXnFormats.dylib"; sourceTree = Kinect; };
-		BE5CFC221379EBD900E4E383 /* libXnVFeatures_1_3_1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVFeatures_1_3_1.dylib; path = "install_name-modified/NITE/libXnVFeatures_1_3_1.dylib"; sourceTree = Kinect; };
 		BE5CFC301379EC1D00E4E383 /* app-main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "app-main.cpp"; sourceTree = "<group>"; };
 		BE5CFC691379FB3800E4E383 /* RegisterPrivateModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterPrivateModule.h; sourceTree = "<group>"; };
 		BE5CFC6A1379FB3800E4E383 /* RegisterPrivateModule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RegisterPrivateModule.cpp; sourceTree = "<group>"; };
 		BE5CFCF91379FD7600E4E383 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		BE5CFD36137A04CD00E4E383 /* libOpenNI.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libOpenNI.dylib; path = "OpenNI-Mac-project/build/Debug/libOpenNI.dylib"; sourceTree = Kinect; };
+		BE75FCFD1416DC0A00C5E8A1 /* libXnVFeatures_1_4_1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libXnVFeatures_1_4_1.dylib; path = "install_name-modified/NITE/libXnVFeatures_1_4_1.dylib"; sourceTree = Kinect; };
 		BE897A4D137DFCD300A708D0 /* InitLogDestination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitLogDestination.h; sourceTree = "<group>"; };
 		BE897A4E137DFCD300A708D0 /* InitLogDestination.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InitLogDestination.cpp; sourceTree = "<group>"; };
-		BEE11E6E137B57CD00ED0184 /* h.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = h.dat; path = "Nite-1.3.1.5 MacOS/Features_1_3_1/Data/h.dat"; sourceTree = Kinect; };
-		BEE11E6F137B57CD00ED0184 /* s.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = s.dat; path = "Nite-1.3.1.5 MacOS/Features_1_3_1/Data/s.dat"; sourceTree = Kinect; };
+		BEE11E6E137B57CD00ED0184 /* h.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = h.dat; path = "NITE-Bin-MacOSX-v1.4.1.2/Features_1_4_1/Data/h.dat"; sourceTree = Kinect; };
+		BEE11E6F137B57CD00ED0184 /* s.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = s.dat; path = "NITE-Bin-MacOSX-v1.4.1.2/Features_1_4_1/Data/s.dat"; sourceTree = Kinect; };
 		BEE11ED5137B744B00ED0184 /* libusb.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libusb.dylib; path = "install_name-modified/libusb/libusb.dylib"; sourceTree = Kinect; };
 		BEF2EF11137C52A200708861 /* SamplesConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SamplesConfig.xml; path = "OpenNI-fork/OpenNI/Data/SamplesConfig.xml"; sourceTree = Kinect; };
 		BEF2EF29137C5D3300708861 /* FeatureExtraction.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = FeatureExtraction.ini; path = "Nite-1.3.1.5 MacOS/Features_1_3_1/Data/FeatureExtraction.ini"; sourceTree = Kinect; };
@@ -124,6 +121,7 @@
 				BEE11E69137B579200ED0184 /* Data Files */,
 				BE5BD830136A2C4F00B8CEFC /* Frameworks */,
 				BE5CFD35137A04AD00E4E383 /* dylibs for tool */,
+				BE25B9981417F26900D7ED40 /* more dylibs for app */,
 				BE5CFC0A1379EB7400E4E383 /* dylibs for app */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
 				BE5CFBE01379EAF100E4E383 /* TrackerApp-Info.plist */,
@@ -155,6 +153,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		BE25B9981417F26900D7ED40 /* more dylibs for app */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "more dylibs for app";
+			sourceTree = "<group>";
+		};
 		BE5BD830136A2C4F00B8CEFC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,12 +175,10 @@
 			children = (
 				BEE11ED5137B744B00ED0184 /* libusb.dylib */,
 				BE5CFD36137A04CD00E4E383 /* libOpenNI.dylib */,
-				BE5CFC221379EBD900E4E383 /* libXnVFeatures_1_3_1.dylib */,
-				BE5CFC171379EBC300E4E383 /* libXnCore.dylib */,
-				BE5CFC181379EBC300E4E383 /* libXnDDK.dylib */,
-				BE5CFC191379EBC300E4E383 /* libXnDeviceFile.dylib */,
+				BE25B9AC1417F36F00D7ED40 /* libXnVHandGenerator_1_4_1.dylib */,
+				BE25B9AD1417F36F00D7ED40 /* libXnVNite_1_4_1.dylib */,
+				BE75FCFD1416DC0A00C5E8A1 /* libXnVFeatures_1_4_1.dylib */,
 				BE5CFC1A1379EBC300E4E383 /* libXnDeviceSensorV2KM.dylib */,
-				BE5CFC1B1379EBC300E4E383 /* libXnFormats.dylib */,
 			);
 			name = "dylibs for app";
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 		BE5CFD35137A04AD00E4E383 /* dylibs for tool */ = {
 			isa = PBXGroup;
 			children = (
+				BE25BAC91418202300D7ED40 /* libusb-1.0.0.dylib */,
 				BE5BD83D136A306600B8CEFC /* libOpenNI.dylib */,
 			);
 			name = "dylibs for tool";
@@ -313,7 +317,8 @@
 				INSTALL_PATH = /usr/local/bin;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../../Platform/Linux-x86/Bin/Release\"",
+					"\"$(Kinect)/OpenNI-fork/OpenNI/Platform/Linux-x86/Bin/Release\"",
+					/opt/local/lib,
 				);
 				PRODUCT_NAME = UserTracker;
 			};
@@ -329,6 +334,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Platform/Linux-x86/Bin/Release\"",
+					/opt/local/lib,
 				);
 				PRODUCT_NAME = UserTracker;
 			};

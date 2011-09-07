@@ -74,7 +74,7 @@ XnBool g_bQuit = false;
 
 void CleanupExit()
 {
-	g_Context.Shutdown();
+	g_Context.Release();
 
 	exit (1);
 }
@@ -111,9 +111,10 @@ void XN_CALLBACK_TYPE UserCalibration_CalibrationStart(xn::SkeletonCapability& c
 	printf("Calibration started for user %d\n", nId);
 }
 // Callback: Finished calibration
-void XN_CALLBACK_TYPE UserCalibration_CalibrationEnd(xn::SkeletonCapability& capability, XnUserID nId, XnBool bSuccess, void* pCookie)
+void XN_CALLBACK_TYPE UserCalibration_CalibrationEnd(xn::SkeletonCapability& capability,
+			XnUserID nId, XnCalibrationStatus calibrationError, void* pCookie)
 {
-	if (bSuccess)
+	if (calibrationError == XN_CALIBRATION_STATUS_OK)
 	{
 		// Calibration succeeded
 		printf("Calibration complete, start tracking user %d\n", nId);
@@ -297,16 +298,26 @@ static void ReportFailure( XnStatus inErrCode, const char* inMessage )
 
 static void RegisterModules()
 {
+	RegisterPrivateModule( "XnDeviceSensorV2KM" );	// Required
+	RegisterPrivateModule( "XnVFeatures_1_4_1" );	// Required to create User node
+	RegisterPrivateModule( "XnVNite_1_4_1" );	// Required to create Script node
+	RegisterPrivateModule( "XnVHandGenerator_1_4_1" );
+	
+	// Experimental things that might not be needed.
+	// OpenNI
 	//RegisterPrivateModule( "nimMockNodes" );
 	//RegisterPrivateModule( "nimCodecs" );
 	//RegisterPrivateModule( "nimRecorder" );
-	RegisterPrivateModule( "XnDeviceSensorV2KM" );	// Required
+	// NITE
+	//RegisterPrivateModule( "XnVCNITE_1_4_1" );
+	//RegisterPrivateModule( "XnVHandGenerator_1_4_1" );
+	// Sensor
 	//RegisterPrivateModule( "XnDeviceFile" );
-	RegisterPrivateModule( "XnVFeatures_1_3_1" );	// Required to create User node
-	//RegisterPrivateModule( "XnVHandGenerator_1_3_1" );
+	//RegisterPrivateModule( "XnCore" );
+	//RegisterPrivateModule( "XnDDK" );
 }
 
-static void AddLicense()
+/*static void AddLicense()
 {
 	XnLicense theLicense =
 	{
@@ -314,7 +325,7 @@ static void AddLicense()
 		"0KOIk2JeIBYClPWVnMoRKn5cdY4="
 	};
 	g_Context.AddLicense( theLicense );
-}
+}*/
 
 int main(int argc, char **argv)
 {
@@ -356,7 +367,7 @@ int main(int argc, char **argv)
 		}
 	}
 
-	AddLicense();
+	//AddLicense();
 
 	nRetVal = g_Context.FindExistingNode(XN_NODE_TYPE_DEPTH, g_DepthGenerator);
 	CHECK_RC(nRetVal, "Find depth generator");
@@ -368,14 +379,15 @@ int main(int argc, char **argv)
 	}
 	nRetVal = g_Context.FindExistingNode(XN_NODE_TYPE_IMAGE, g_image);
 
-	XnCallbackHandle hUserCallbacks, hCalibrationCallbacks, hPoseCallbacks;
+	XnCallbackHandle hUserCallbacks, hCalibrationStartCallback, hiCalibrationEndCallback, hPoseCallbacks;
 	if (!g_UserGenerator.IsCapabilitySupported(XN_CAPABILITY_SKELETON))
 	{
 		printf("Supplied user generator doesn't support skeleton\n");
 		return 1;
 	}
 	g_UserGenerator.RegisterUserCallbacks(User_NewUser, User_LostUser, NULL, hUserCallbacks);
-	g_UserGenerator.GetSkeletonCap().RegisterCalibrationCallbacks(UserCalibration_CalibrationStart, UserCalibration_CalibrationEnd, NULL, hCalibrationCallbacks);
+	g_UserGenerator.GetSkeletonCap().RegisterToCalibrationStart( UserCalibration_CalibrationStart, NULL, hCalibrationStartCallback );
+	g_UserGenerator.GetSkeletonCap().RegisterToCalibrationComplete( UserCalibration_CalibrationEnd, NULL, hiCalibrationEndCallback );
 
 	if (g_UserGenerator.GetSkeletonCap().NeedPoseForCalibration())
 	{
