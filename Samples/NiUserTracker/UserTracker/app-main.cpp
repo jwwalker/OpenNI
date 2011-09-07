@@ -350,9 +350,10 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	
+	xn::ScriptNode theScriptNode;
 	{
 		xn::EnumerationErrors errors;
-		nRetVal = g_Context.InitFromXmlFile( configPath, &errors );
+		nRetVal = g_Context.InitFromXmlFile( configPath, theScriptNode, &errors );
 		if (nRetVal == XN_STATUS_NO_NODE_PRESENT)
 		{
 			XnChar strError[1024];
@@ -379,7 +380,8 @@ int main(int argc, char **argv)
 	}
 	nRetVal = g_Context.FindExistingNode(XN_NODE_TYPE_IMAGE, g_image);
 
-	XnCallbackHandle hUserCallbacks, hCalibrationStartCallback, hiCalibrationEndCallback, hPoseCallbacks;
+	XnCallbackHandle hUserCallbacks, hCalibrationStartCallback,
+		hiCalibrationEndCallback, hPoseDetectedCallback;
 	if (!g_UserGenerator.IsCapabilitySupported(XN_CAPABILITY_SKELETON))
 	{
 		printf("Supplied user generator doesn't support skeleton\n");
@@ -397,7 +399,7 @@ int main(int argc, char **argv)
 			printf("Pose required, but not supported\n");
 			return 1;
 		}
-		g_UserGenerator.GetPoseDetectionCap().RegisterToPoseCallbacks(UserPose_PoseDetected, NULL, NULL, hPoseCallbacks);
+		g_UserGenerator.GetPoseDetectionCap().RegisterToPoseDetected( UserPose_PoseDetected, NULL, hPoseDetectedCallback );
 		g_UserGenerator.GetSkeletonCap().GetCalibrationPose(g_strPose);
 	}
 
