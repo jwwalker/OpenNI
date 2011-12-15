@@ -291,6 +291,82 @@ static void DrawUsersAndStrings()
 	}
 }
 
+void DrawIRMap(const xn::IRMetaData& imd)
+{
+	static bool bInitialized = false;	
+	static GLuint texID;
+	static unsigned char* pTexBuf;
+	static int texWidth, texHeight;
+
+	float topLeftX;
+	float topLeftY;
+	float bottomRightY;
+	float bottomRightX;
+	
+	XnUInt16 g_nXRes = imd.XRes();
+	XnUInt16 g_nYRes = imd.YRes();
+
+	if (!bInitialized)
+	{
+		texWidth =  getClosestPowerOfTwo(g_nXRes);
+		texHeight = getClosestPowerOfTwo(g_nYRes);
+		
+		texID = initTexture((void**)&pTexBuf, texWidth, texHeight) ;
+		bInitialized = true;
+
+		topLeftX = imd.XRes();
+		topLeftY = 0;
+		bottomRightY = imd.YRes();
+		bottomRightX = 0;
+		float texXpos =(float)imd.XRes()/texWidth;
+		float texYpos  =(float)imd.YRes()/texHeight;
+		memset(texcoords, 0, 8*sizeof(float));
+		texcoords[0] = texXpos, texcoords[1] = texYpos, texcoords[2] = texXpos, texcoords[7] = texYpos;
+	}
+
+	const XnIRPixel* pImage = imd.Data();
+	
+	unsigned char* pDestImage = pTexBuf;
+
+	unsigned int nX = 0;
+	unsigned int nY = 0;
+
+	if (g_bDrawPixels)
+	{
+		for (nY=0; nY<g_nYRes; nY++)
+		{
+			for (nX=0; nX < g_nXRes; nX++)
+			{
+				unsigned char grayLevel = *pImage >> 8;
+				{
+					pDestImage[0] = grayLevel;
+					pDestImage[1] = grayLevel;
+					pDestImage[2] = grayLevel;
+				}
+
+				pImage++;
+				pDestImage += 3;
+			}
+			
+			pDestImage += (texWidth - g_nXRes) * 3;
+		}
+	}
+	else
+	{
+		xnOSMemSet( pTexBuf, 0, 3 * texWidth * texHeight );
+	}
+
+	glBindTexture(GL_TEXTURE_2D, texID);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth, texHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, pTexBuf);
+
+	// Display the OpenGL texture map
+	glColor4f(1.0,1.0,1.0,1);
+
+	glEnable(GL_TEXTURE_2D);
+	DrawTexture( g_nXRes, g_nYRes, 0, 0 );	
+	glDisable(GL_TEXTURE_2D);
+}
+
 void DrawImageMap(const xn::ImageMetaData& imd, const xn::SceneMetaData& smd)
 {
 	static bool bInitialized = false;	
@@ -459,6 +535,16 @@ void DrawDepthMap(const xn::DepthMetaData& dmd, const xn::SceneMetaData& smd)
 			pDepth++;
 		}
 	}
+	
+	int numValues = 0;
+	for (nIndex=0; nIndex<MAX_DEPTH; nIndex++)
+	{
+		if (g_pDepthHist[nIndex] > 0)
+		{
+			++numValues;
+		}
+	}
+	printf("%d distinct depth values\n", numValues);
 
 	for (nIndex=1; nIndex<MAX_DEPTH; nIndex++)
 	{

@@ -38,6 +38,8 @@
 #import "SceneDrawer.h"
 #import "RegisterPrivateModule.h"
 #import "InitLogDestination.h"
+#include <XnVSessionManager.h>
+#include <XnVCircleDetector.h>
 
 #import <CoreFoundation/CoreFoundation.h>
 
@@ -45,9 +47,13 @@
 // Globals
 //---------------------------------------------------------------------------
 xn::Context g_Context;
+xn::ScriptNode g_scriptNode;
 xn::DepthGenerator g_DepthGenerator;
 xn::UserGenerator g_UserGenerator;
-xn::ImageGenerator g_image;
+xn::IRGenerator g_image;
+xn::GestureGenerator g_GestureGenerator;
+XnVSessionManager * g_pSessionManager = NULL;
+XnVCircleDetector*  g_pCircle = NULL;
 
 XnBool g_bNeedPose = FALSE;
 XnChar g_strPose[20] = "";
@@ -74,6 +80,9 @@ XnBool g_bQuit = false;
 
 void CleanupExit()
 {
+	g_scriptNode.Release();
+	g_DepthGenerator.Release();
+	g_UserGenerator.Release();
 	g_Context.Release();
 
 	exit (1);
@@ -191,7 +200,7 @@ void glutDisplay (void)
 
 	xn::SceneMetaData sceneMD;
 	xn::DepthMetaData depthMD;
-	xn::ImageMetaData imageMD;
+	xn::IRMetaData imageMD;
 	
 	g_DepthGenerator.GetMetaData(depthMD);
 	glOrtho(0, depthMD.XRes(), depthMD.YRes(), 0, -1.0, 1.0);
@@ -202,6 +211,9 @@ void glutDisplay (void)
 	{
 		// Read next available data
 		g_Context.WaitOneUpdateAll(g_DepthGenerator);
+
+		// Process the data
+		g_pSessionManager->Update(&g_Context);
 	}
 
 		// Process the data
@@ -210,7 +222,8 @@ void glutDisplay (void)
 		g_image.GetMetaData(imageMD);
 		
 		//DrawDepthMap(depthMD, sceneMD);
-		DrawImageMap( imageMD, sceneMD );
+		//DrawImageMap( imageMD, sceneMD );
+		DrawIRMap( imageMD );
 
 	glutSwapBuffers();
 }
@@ -310,7 +323,6 @@ static void RegisterModules()
 	//RegisterPrivateModule( "nimRecorder" );
 	// NITE
 	//RegisterPrivateModule( "XnVCNITE_1_4_1" );
-	//RegisterPrivateModule( "XnVHandGenerator_1_4_1" );
 	// Sensor
 	//RegisterPrivateModule( "XnDeviceFile" );
 	//RegisterPrivateModule( "XnCore" );
@@ -326,6 +338,54 @@ static void RegisterModules()
 	};
 	g_Context.AddLicense( theLicense );
 }*/
+
+typedef char char32[32];
+
+void XN_CALLBACK_TYPE SessionStart(const XnPoint3D& ptFocus, void *pUserCxt)
+{
+	//SetVisualFeedbackFrame(true, 0.1, 1.0, 0.1);
+	fprintf( stderr, "SessionStart\n");
+}
+
+void XN_CALLBACK_TYPE SessionEnd(void *pUserCxt)
+{
+	//SetVisualFeedbackFrame(false, 0, 0, 0);
+	fprintf( stderr, "SessionEnd\n");
+}
+
+void XN_CALLBACK_TYPE CircleCB(XnFloat fTimes, XnBool bConfident, const XnVCircle* pCircle, void* pUserCxt)
+{
+	fprintf( stderr, "CircleCB\n");
+}
+
+void XN_CALLBACK_TYPE NoCircleCB(XnFloat fLastValue, XnVCircleDetector::XnVNoCircleReason reason, void * pUserCxt)
+{
+	fprintf( stderr, "NoCircleCB\n");
+}
+
+void XN_CALLBACK_TYPE Circle_PrimaryCreate(const XnVHandPointContext *cxt, const XnPoint3D& ptFocus, void * pUserCxt)
+{
+	fprintf( stderr, "Circle_PrimaryCreate\n");
+}
+
+void XN_CALLBACK_TYPE Circle_PrimaryDestroy(XnUInt32 nID, void * pUserCxt)
+{
+	fprintf( stderr, "Circle_PrimaryDestroy\n");
+}
+
+void GestureRecognizedProc( xn::GestureGenerator& generator, const XnChar* strGesture,
+	const XnPoint3D* pIDPosition, const XnPoint3D* pEndPosition, void* pCookie )
+{
+	fprintf( stderr, "Gesture '%s' Recognized\n", (const char*)strGesture );
+}
+
+
+void GestureProgressProc( xn::GestureGenerator& generator, const XnChar* strGesture,
+	const XnPoint3D* pPosition, XnFloat fProgress, void* pCookie )
+{
+	fprintf( stderr, "Gesture '%s' in progress, %f\n", (const char*)strGesture,
+		fProgress );
+}
 
 int main(int argc, char **argv)
 {
@@ -350,10 +410,9 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	
-	xn::ScriptNode theScriptNode;
 	{
 		xn::EnumerationErrors errors;
-		nRetVal = g_Context.InitFromXmlFile( configPath, theScriptNode, &errors );
+		nRetVal = g_Context.InitFromXmlFile( configPath, g_scriptNode, &errors );
 		if (nRetVal == XN_STATUS_NO_NODE_PRESENT)
 		{
 			XnChar strError[1024];
@@ -370,6 +429,27 @@ int main(int argc, char **argv)
 
 	//AddLicense();
 
+	// Create and initialize point tracker
+	g_pSessionManager = new XnVSessionManager();
+	nRetVal = g_pSessionManager->Initialize(&g_Context, "Wave", "RaiseHand");
+	if (nRetVal != XN_STATUS_OK)
+	{
+		printf("Couldn't initialize the Session Manager: %s\n", xnGetStatusString(nRetVal));
+		CleanupExit();
+	}
+	
+#if 0
+	g_pSessionManager->RegisterSession(NULL, &SessionStart, &SessionEnd);
+
+	// init and register circle control
+	g_pCircle = new XnVCircleDetector;
+	g_pCircle->RegisterCircle(NULL, &CircleCB);
+	g_pCircle->RegisterNoCircle(NULL, &NoCircleCB);
+	g_pCircle->RegisterPrimaryPointCreate(NULL, &Circle_PrimaryCreate);
+	g_pCircle->RegisterPrimaryPointDestroy(NULL, &Circle_PrimaryDestroy);
+	g_pSessionManager->AddListener(g_pCircle);
+#endif
+
 	nRetVal = g_Context.FindExistingNode(XN_NODE_TYPE_DEPTH, g_DepthGenerator);
 	CHECK_RC(nRetVal, "Find depth generator");
 	nRetVal = g_Context.FindExistingNode(XN_NODE_TYPE_USER, g_UserGenerator);
@@ -378,7 +458,40 @@ int main(int argc, char **argv)
 		nRetVal = g_UserGenerator.Create(g_Context);
 		CHECK_RC(nRetVal, "Find user generator");
 	}
-	nRetVal = g_Context.FindExistingNode(XN_NODE_TYPE_IMAGE, g_image);
+	//nRetVal = g_Context.FindExistingNode(XN_NODE_TYPE_IMAGE, g_image);
+	nRetVal = g_Context.FindExistingNode(XN_NODE_TYPE_IR, g_image);
+	if (nRetVal != XN_STATUS_OK)
+	{
+		nRetVal = g_image.Create(g_Context);
+		CHECK_RC(nRetVal, "Find image generator");
+	}
+
+	// Get a gesture generator
+	nRetVal = g_Context.FindExistingNode(XN_NODE_TYPE_GESTURE, g_GestureGenerator);
+	if (nRetVal != XN_STATUS_OK)
+	{
+		nRetVal = g_GestureGenerator.Create(g_Context);
+		CHECK_RC(nRetVal, "Find gesture generator");
+	}
+	
+	// Find out what gestures are available
+	{
+		char32 gests[20];
+		XnUInt16 numGest = sizeof(gests);
+		char* namePtrs[20];
+		for (int i = 0; i < 20; ++i)
+		{
+			namePtrs[i] = (char*)gests[i];
+		}
+		nRetVal = g_GestureGenerator.EnumerateAllGestures( namePtrs, 32, numGest );
+		CHECK_RC(nRetVal, "Find gesture count");
+		printf("%d gestures\n", (int)numGest );
+	}
+	
+	// Register callbacks for gestures
+	XnCallbackHandle hGestureCallback;
+	g_GestureGenerator.RegisterGestureCallbacks( GestureRecognizedProc,
+		GestureProgressProc, NULL, hGestureCallback );
 
 	XnCallbackHandle hUserCallbacks, hCalibrationStartCallback,
 		hiCalibrationEndCallback, hPoseDetectedCallback;
@@ -407,7 +520,7 @@ int main(int argc, char **argv)
 	
 	// JWW: Not sure what this does, but I copied it from NISimpleViewer, and
 	// it helps align the scene analysis labels with the image.
-	g_DepthGenerator.GetAlternativeViewPointCap().SetViewPoint(g_image);
+	//g_DepthGenerator.GetAlternativeViewPointCap().SetViewPoint(g_image);
 	//g_image.GetAlternativeViewPointCap().SetViewPoint(g_DepthGenerator);
 
 	nRetVal = g_Context.StartGeneratingAll();

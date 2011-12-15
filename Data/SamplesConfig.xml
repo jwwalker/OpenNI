@@ -4,9 +4,9 @@
 		<License vendor="vendor" key="key"/>
 		-->
 	</Licenses>
-	<Log writeToConsole="false" writeToFile="true">
+	<Log writeToConsole="true" writeToFile="true">
 		<!-- 0 - Verbose, 1 - Info, 2 - Warning, 3 - Error (default) -->
-		<LogLevel value="1"/>
+		<LogLevel value="0"/>
 		<Masks>
 			<Mask name="ALL" on="true"/>
 		</Masks>
@@ -14,6 +14,13 @@
 		</Dumps>
 	</Log>
 	<ProductionNodes>
+		<!--
+		<Node type="IR" name="IR1">
+			<Configuration>
+				<Mirror on="true"/>
+			</Configuration>
+		</Node>
+		-->
 		<Node type="Depth" name="Depth1">
 			<Configuration>
 				<Mirror on="true"/>
@@ -24,6 +31,10 @@
 				<Mirror on="true"/>
 			</Configuration>
 		</Node>
+		<Node type="Gesture" />
+		<!--
+		<Node type="Hands" />
+		-->
 		<!--
 		<Node type="Audio" name="Audio1"/>
 		-->
