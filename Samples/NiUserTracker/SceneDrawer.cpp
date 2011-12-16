@@ -1,6 +1,6 @@
 /****************************************************************************
 *                                                                           *
-*  OpenNI 1.1 Alpha                                                         *
+*  OpenNI 1.x Alpha                                                         *
 *  Copyright (C) 2011 PrimeSense Ltd.                                       *
 *                                                                           *
 *  This file is part of OpenNI.                                             *
@@ -479,7 +479,6 @@ void DrawDepthMap(const xn::DepthMetaData& dmd, const xn::SceneMetaData& smd)
 
 	if(!bInitialized)
 	{
-
 		texWidth =  getClosestPowerOfTwo(dmd.XRes());
 		texHeight = getClosestPowerOfTwo(dmd.YRes());
 
@@ -498,8 +497,8 @@ void DrawDepthMap(const xn::DepthMetaData& dmd, const xn::SceneMetaData& smd)
 
 		memset(texcoords, 0, 8*sizeof(float));
 		texcoords[0] = texXpos, texcoords[1] = texYpos, texcoords[2] = texXpos, texcoords[7] = texYpos;
-
 	}
+
 	unsigned int nValue = 0;
 	unsigned int nHistValue = 0;
 	unsigned int nIndex = 0;
