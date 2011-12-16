@@ -312,9 +312,9 @@ static void ReportFailure( XnStatus inErrCode, const char* inMessage )
 static void RegisterModules()
 {
 	RegisterPrivateModule( "XnDeviceSensorV2KM" );	// Required
-	RegisterPrivateModule( "XnVFeatures_1_4_1" );	// Required to create User node
-	RegisterPrivateModule( "XnVNite_1_4_1" );	// Required to create Script node
-	RegisterPrivateModule( "XnVHandGenerator_1_4_1" );
+	RegisterPrivateModule( "XnVFeatures_1_5_0" );	// Required to create User node
+	RegisterPrivateModule( "XnVNite_1_5_0" );	// Required to create Script node
+	RegisterPrivateModule( "XnVHandGenerator_1_5_0" );
 	
 	// Experimental things that might not be needed.
 	// OpenNI
@@ -322,7 +322,7 @@ static void RegisterModules()
 	//RegisterPrivateModule( "nimCodecs" );
 	//RegisterPrivateModule( "nimRecorder" );
 	// NITE
-	//RegisterPrivateModule( "XnVCNITE_1_4_1" );
+	RegisterPrivateModule( "XnVCNITE_1_5_0" );
 	// Sensor
 	//RegisterPrivateModule( "XnDeviceFile" );
 	//RegisterPrivateModule( "XnCore" );
@@ -429,6 +429,7 @@ int main(int argc, char **argv)
 
 	//AddLicense();
 
+#if 0
 	// Create and initialize point tracker
 	g_pSessionManager = new XnVSessionManager();
 	nRetVal = g_pSessionManager->Initialize(&g_Context, "Wave", "RaiseHand");
@@ -437,6 +438,7 @@ int main(int argc, char **argv)
 		printf("Couldn't initialize the Session Manager: %s\n", xnGetStatusString(nRetVal));
 		CleanupExit();
 	}
+#endif
 	
 #if 0
 	g_pSessionManager->RegisterSession(NULL, &SessionStart, &SessionEnd);
