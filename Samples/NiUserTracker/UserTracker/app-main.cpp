@@ -50,7 +50,7 @@ xn::Context g_Context;
 xn::ScriptNode g_scriptNode;
 xn::DepthGenerator g_DepthGenerator;
 xn::UserGenerator g_UserGenerator;
-xn::IRGenerator g_image;
+xn::ImageGenerator g_image;
 xn::GestureGenerator g_GestureGenerator;
 XnVSessionManager * g_pSessionManager = NULL;
 XnVCircleDetector*  g_pCircle = NULL;
@@ -200,7 +200,8 @@ void glutDisplay (void)
 
 	xn::SceneMetaData sceneMD;
 	xn::DepthMetaData depthMD;
-	xn::IRMetaData imageMD;
+	//xn::IRMetaData imageMD;
+	xn::ImageMetaData imageMD;
 	
 	g_DepthGenerator.GetMetaData(depthMD);
 	glOrtho(0, depthMD.XRes(), depthMD.YRes(), 0, -1.0, 1.0);
@@ -213,7 +214,10 @@ void glutDisplay (void)
 		g_Context.WaitOneUpdateAll(g_DepthGenerator);
 
 		// Process the data
-		g_pSessionManager->Update(&g_Context);
+		if (g_pSessionManager != NULL)
+		{
+			g_pSessionManager->Update(&g_Context);
+		}
 	}
 
 		// Process the data
@@ -222,8 +226,8 @@ void glutDisplay (void)
 		g_image.GetMetaData(imageMD);
 		
 		//DrawDepthMap(depthMD, sceneMD);
-		//DrawImageMap( imageMD, sceneMD );
-		DrawIRMap( imageMD );
+		DrawImageMap( imageMD, sceneMD );
+		//DrawIRMap( imageMD );
 
 	glutSwapBuffers();
 }
@@ -460,8 +464,8 @@ int main(int argc, char **argv)
 		nRetVal = g_UserGenerator.Create(g_Context);
 		CHECK_RC(nRetVal, "Find user generator");
 	}
-	//nRetVal = g_Context.FindExistingNode(XN_NODE_TYPE_IMAGE, g_image);
-	nRetVal = g_Context.FindExistingNode(XN_NODE_TYPE_IR, g_image);
+	nRetVal = g_Context.FindExistingNode(XN_NODE_TYPE_IMAGE, g_image);
+	//nRetVal = g_Context.FindExistingNode(XN_NODE_TYPE_IR, g_image);
 	if (nRetVal != XN_STATUS_OK)
 	{
 		nRetVal = g_image.Create(g_Context);
@@ -522,8 +526,8 @@ int main(int argc, char **argv)
 	
 	// JWW: Not sure what this does, but I copied it from NISimpleViewer, and
 	// it helps align the scene analysis labels with the image.
-	//g_DepthGenerator.GetAlternativeViewPointCap().SetViewPoint(g_image);
-	//g_image.GetAlternativeViewPointCap().SetViewPoint(g_DepthGenerator);
+	g_DepthGenerator.GetAlternativeViewPointCap().SetViewPoint(g_image);
+	g_image.GetAlternativeViewPointCap().SetViewPoint(g_DepthGenerator);
 
 	nRetVal = g_Context.StartGeneratingAll();
 	CHECK_RC(nRetVal, "StartGenerating");
