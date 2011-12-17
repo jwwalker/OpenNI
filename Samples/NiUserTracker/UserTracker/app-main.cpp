@@ -326,7 +326,7 @@ static void RegisterModules()
 	//RegisterPrivateModule( "nimCodecs" );
 	//RegisterPrivateModule( "nimRecorder" );
 	// NITE
-	RegisterPrivateModule( "XnVCNITE_1_5_0" );
+	//RegisterPrivateModule( "XnVCNITE_1_5_0" );
 	// Sensor
 	//RegisterPrivateModule( "XnDeviceFile" );
 	//RegisterPrivateModule( "XnCore" );
