@@ -316,9 +316,9 @@ static void ReportFailure( XnStatus inErrCode, const char* inMessage )
 static void RegisterModules()
 {
 	RegisterPrivateModule( "XnDeviceSensorV2KM" );	// Required
-	RegisterPrivateModule( "XnVFeatures_1_5_0" );	// Required to create User node
-	RegisterPrivateModule( "XnVNite_1_5_0" );	// Required to create Script node
-	RegisterPrivateModule( "XnVHandGenerator_1_5_0" );
+	RegisterPrivateModule( "XnVFeatures_1_5_2" );	// Required to create User node
+	RegisterPrivateModule( "XnVNite_1_5_2" );	// Required to create Script node
+	RegisterPrivateModule( "XnVHandGenerator_1_5_2" );
 	
 	// Experimental things that might not be needed.
 	// OpenNI
